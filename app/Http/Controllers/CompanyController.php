@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\CompanyNote;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Str;
@@ -16,8 +17,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
-        $companies = Company::all();
+
+        $companies = Company::withCount('notes')->get();
+        
         return view('companies.index', compact('companies'));
     }
 
@@ -50,6 +52,25 @@ class CompanyController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeNote($uuid, Request $request)
+    {
+
+        //
+        $storeData = $request->validate([
+            'message' => 'required|max:255',
+            'company_id' => 'required|integer'
+        ]);
+        $note = CompanyNote::create($storeData);
+
+        return redirect('/companies/'.$uuid)->with('completed', 'Note has been saved!');
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -59,7 +80,8 @@ class CompanyController extends Controller
     {
         //
         $company = Company::where('uuid', '=', $uuid)->firstOrFail();
-        return view('companies.show', compact('company'));
+        $notes = Company::find($company->id)->notes;
+        return view('companies.show', compact('company'), compact('notes'));
     }
 
     /**

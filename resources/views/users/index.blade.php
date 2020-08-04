@@ -21,6 +21,7 @@
           <td>First Name</td>
           <td>Last Name</td>
           <td>Email</td>
+          <td>Notes</td>
           <td class="text-center">Action</td>
         </tr>
     </thead>
@@ -31,7 +32,9 @@
             <td>{{$user->first_name}}</td>
             <td>{{$user->last_name}}</td>
             <td>{{$user->email}}</td>
+            <td>{{$user->notes_count}}</td>
             <td class="text-center">
+                <a href="{{ route('users.show', $user->id)}}" class="btn btn-primary btn-sm"">Show</a>
                 <a href="{{ route('users.edit', $user->id)}}" class="btn btn-primary btn-sm"">Edit</a>
                 <form action="{{ route('users.destroy', $user->id)}}" method="post" style="display: inline-block">
                     @csrf

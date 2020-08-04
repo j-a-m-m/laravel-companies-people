@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\UserNote;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,8 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        // TODO display display number of notes
-        $users = User::all('id', 'first_name', 'last_name', 'email');
+        $users = User::select(['id', 'first_name', 'last_name', 'email'])->withCount('notes')->get();
         return view('users.index', compact('users'));
     }
 
@@ -49,6 +49,25 @@ class UserController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeNote($id, Request $request)
+    {
+
+        //
+        $storeData = $request->validate([
+            'message' => 'required|max:255',
+        ]);
+        $storeData['user_id'] = $id;
+        $note = UserNote::create($storeData);
+
+        return redirect('/users/'.$id)->with('completed', 'Note has been saved!');
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -57,6 +76,9 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        $user = User::where('id', '=', $id)->firstOrFail();
+        $notes = User::find($user->id)->notes;
+        return view('users.show', compact('user'), compact('notes'));
     }
 
     /**

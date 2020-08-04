@@ -20,6 +20,7 @@
           <td>ID</td>
           <td>Name</td>
           <td>UUID</td>
+          <td>Notes</td>
           <td class="text-center">Action</td>
         </tr>
     </thead>
@@ -29,6 +30,7 @@
             <td>{{$company->id}}</td>
             <td>{{$company->name}}</td>
             <td>{{$company->uuid}}</td>
+            <td>{{$company->notes_count}}</td>
             <td class="text-center">
                 <a href="{{ route('companies.show', $company->uuid)}}" class="btn btn-primary btn-sm"">Show</a>
                 <a href="{{ route('companies.edit', $company->id)}}" class="btn btn-primary btn-sm"">Edit</a>

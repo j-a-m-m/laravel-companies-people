@@ -13,7 +13,7 @@
 
 <div class="card push-top">
   <div class="card-header">
-    {{$company->name}}
+    {{$user->first_name}} {{$user-> last_name}}
   </div>
 
   <div class="card-body">
@@ -26,7 +26,7 @@
         </ul>
       </div><br />
     @endif
-    <small>UUID:  {{$company->uuid}}</small>
+    <small>E-Mail:  {{$user->email}}</small>
   </div>
 </div>
 
@@ -36,12 +36,11 @@
   <div class="card-header">
     Add a Note
   </div>
-  <form method="post" action="{{ route('companies.storeNote', $company->uuid) }}">
+  <form method="post" action="{{ route('users.storeNote', $user->id) }}">
     <div class="form-group">
         @csrf
         <input type="text" class="form-control" name="message" placeholder="Message..."/>
     </div>
-    <input type="hidden" value="{{$company->id}}" name="company_id" />
     <div class="text-center">
       <button type="submit" class="btn btn-primary">Add Note</button>
     </div>

@@ -31,9 +31,6 @@
               @csrf
               <label for="name">Name</label>
               <input type="text" class="form-control" name="name"/>
-          <div class="form-group">
-              <label for="uuid">UUID</label>
-              <input type="text" class="form-control" name="uuid"/>
           </div>
           <button type="submit" class="btn btn-block btn-danger">Create Company</button>
       </form>

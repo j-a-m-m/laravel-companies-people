@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNotesTable extends Migration
+class CreateCompanyNotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateNotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('notes', function (Blueprint $table) {
-            $table->id('noteID')->autoIncrement();
+        Schema::create('company_notes', function (Blueprint $table) {
+            $table->id();
             $table->string('message');
-            $table->foreignId('userID', 'fk_notes_users')->constrained('users');
-            $table->foreignId('companyID', 'fk_notes_companies')->constrained('companies');
-            $table->boolean('isCompanyNote');
+            $table->foreignId('company_id', 'fk_notes_companies')->constrained('companies');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateNotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notes');
+        Schema::dropIfExists('company_notes');
     }
 }

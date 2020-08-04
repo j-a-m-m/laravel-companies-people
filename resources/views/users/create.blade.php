@@ -32,8 +32,7 @@
               <label for="name">First Name</label>
               <input type="text" class="form-control" name="first_name"/>
           </div>
-                    <div class="form-group">
-              @csrf
+          <div class="form-group">
               <label for="last_name">Last Name</label>
               <input type="text" class="form-control" name="last_name"/>
           </div>

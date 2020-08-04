@@ -18,5 +18,9 @@ Route::get('/', function () {
 });
 
 Route::resource('users', 'UserController');
+Route::post('users/{id}', 'UserController@storeNote')->name('users.storeNote');
+
+
 Route::resource('companies', 'CompanyController');
-Route::get('companies/{uuid}', 'UserController@show');
+Route::get('companies/{uuid}', 'CompanyController@show');
+Route::post('companies/{uuid}', 'CompanyController@storeNote')->name('companies.storeNote');
