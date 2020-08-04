@@ -128,4 +128,20 @@ class CompanyController extends Controller
 
         return redirect('/companies')->with('completed', 'Company has been deleted');
     }
+
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyNote($uuid, $noteid)
+    {
+        //
+        $companyNote = CompanyNote::findOrFail($noteid);
+        $companyNote->delete();
+
+        return redirect('/companies/'.$uuid)->with('completed', 'Note has been deleted');
+    }
 }

@@ -17,7 +17,6 @@
   <table class="table">
     <thead>
         <tr class="table-warning">
-          <td>ID</td>
           <td>Name</td>
           <td>UUID</td>
           <td>Notes</td>
@@ -27,7 +26,6 @@
     <tbody>
         @foreach($companies as $company)
         <tr>
-            <td>{{$company->id}}</td>
             <td>{{$company->name}}</td>
             <td>{{$company->uuid}}</td>
             <td>{{$company->notes_count}}</td>

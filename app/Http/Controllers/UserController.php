@@ -6,6 +6,8 @@ use App\User;
 use App\UserNote;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     /**
@@ -40,9 +42,16 @@ class UserController extends Controller
         $storeData = $request->validate([
             'first_name' => 'required|max:35',
             'last_name' => 'required|max:35',
-            'email' => 'required|max:255', // TODO validation on email field
+            'email' => 'required|email:rfc,dns|max:255', // TODO validation on email field
             'password' => 'max:50', //TODO hash password
         ]);
+        
+        //Not sure if best practise to do the hashing here
+        $password = $storeData['password'];
+        $hashedPassword = Hash::make($password);
+        $storeData['password'] = $hashedPassword;
+
+
         $user = User::create($storeData);
 
         return redirect('/users')->with('completed', 'User has been saved!');
@@ -105,9 +114,16 @@ class UserController extends Controller
         $updateData = $request->validate([
             'first_name' => 'required|max:35',
             'last_name' => 'required|max:35',
-            'email' => 'required|max:255', // TODO validation on email field
-            'password' => 'max:50', //TODO hash password
+            'email' => 'required|email:rfc,dns|max:255',
+            'password' => 'max:50',
         ]);
+
+        //Not sure if best practise to do the hashing here
+        // Tried to extract into private function but it didn't work
+        $password = $updateData['password'];
+        $hashedPassword = Hash::make($password);
+        $updateData['password'] = $hashedPassword;
+
         User::whereId($id)->update($updateData);
         return redirect('/users')->with('completed', 'User has been updated');
     }
@@ -124,5 +140,20 @@ class UserController extends Controller
         $user->delete();
 
         return redirect('/users')->with('completed', 'User has been deleted');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyNote($user_id, $note_id)
+    {
+        //
+        $userNote = UserNote::findOrFail($note_id);
+        $userNote->delete();
+
+        return redirect('/users/'.$user_id)->with('completed', 'Note has been deleted');
     }
 }

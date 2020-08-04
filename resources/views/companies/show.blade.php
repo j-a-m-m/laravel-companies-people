@@ -9,6 +9,7 @@
     .push-top {
       margin-top: 50px;
     }
+
 </style>
 
 <div class="card push-top">
@@ -30,7 +31,29 @@
   </div>
 </div>
 
-@include('partials.notes')
+<div class="card push-top">
+  <div class="card-header">
+    Notes
+  </div>
+
+  <div class="container">
+    @foreach ($notes as $note)
+    <div class="row">
+      <div class="col-auto mr-auto">
+        {{$note->message}}
+      </div>
+      <hr>
+      <div class="col-auto">
+        <form action="{{ route('companies.destroyNote', [$company->uuid, $note->id])}}" method="post" style="display: inline-block">
+          @csrf
+          @method('DELETE')
+          <button class="btn btn-danger btn-sm"" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+    @endforeach
+  </div>
+</div>
 
 <div class="card push-top">
   <div class="card-header">
