@@ -42,14 +42,8 @@ class UserController extends Controller
         $storeData = $request->validate([
             'first_name' => 'required|max:35',
             'last_name' => 'required|max:35',
-            'email' => 'required|email:rfc,dns|max:255', // TODO validation on email field
-            'password' => 'max:50', //TODO hash password
+            'email' => 'required|email:rfc,dns|max:255|unique:users',
         ]);
-        
-        //Not sure if best practise to do the hashing here
-        $password = $storeData['password'];
-        $hashedPassword = Hash::make($password);
-        $storeData['password'] = $hashedPassword;
 
 
         $user = User::create($storeData);
@@ -114,15 +108,8 @@ class UserController extends Controller
         $updateData = $request->validate([
             'first_name' => 'required|max:35',
             'last_name' => 'required|max:35',
-            'email' => 'required|email:rfc,dns|max:255',
-            'password' => 'max:50',
+            'email' => 'required|email:rfc,dns|max:255'
         ]);
-
-        //Not sure if best practise to do the hashing here
-        // Tried to extract into private function but it didn't work
-        $password = $updateData['password'];
-        $hashedPassword = Hash::make($password);
-        $updateData['password'] = $hashedPassword;
 
         User::whereId($id)->update($updateData);
         return redirect('/users')->with('completed', 'User has been updated');

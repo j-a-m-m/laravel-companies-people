@@ -2,16 +2,6 @@
 
 @section('content')
 
-<style>
-    .container {
-      max-width: 450px;
-    }
-    .push-top {
-      margin-top: 50px;
-    }
-
-</style>
-
 <div class="card push-top">
   <div class="card-header">
     {{$company->name}}
@@ -43,13 +33,17 @@
         {{$note->message}}
       </div>
       <hr>
-      <div class="col-auto">
-        <form action="{{ route('companies.destroyNote', [$company->uuid, $note->id])}}" method="post" style="display: inline-block">
-          @csrf
-          @method('DELETE')
-          <button class="btn btn-danger btn-sm"" type="submit">Delete</button>
-        </form>
-      </div>
+      @if (Route::has('login'))
+        @auth
+          <div class="col-auto">
+            <form action="{{ route('companies.destroyNote', [$company->uuid, $note->id])}}" method="post" style="display: inline-block">
+              @csrf
+              @method('DELETE')
+              <button class="btn btn-danger btn-sm"" type="submit">Delete</button>
+            </form>
+          </div>
+        @endauth
+      @endif
     </div>
     @endforeach
   </div>
@@ -65,9 +59,7 @@
         <input type="text" class="form-control" name="message" placeholder="Message..."/>
     </div>
     <input type="hidden" value="{{$company->id}}" name="company_id" />
-    <div class="text-center">
-      <button type="submit" class="btn btn-primary">Add Note</button>
-    </div>
+    <button type="submit" class="btn btn-primary float-right">Add Note</button>
   </form>
 </div>
 

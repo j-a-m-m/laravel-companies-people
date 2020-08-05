@@ -4,12 +4,20 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Companies & People</title>
+      <title>{{ config('app.name')}}</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+      <style>
+         .card-div {
+            max-width: 450px;
+         }
+         .push-top {
+            margin-top: 50px;
+         }
+      </style>
    </head>
    <body>
       @include('partials.navbar')
-      <div class="container">
+      <div class="container push-top">
          @yield('content')
       </div>
 

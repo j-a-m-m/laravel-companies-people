@@ -2,15 +2,6 @@
 
 @section('content')
 
-<style>
-    .container {
-      max-width: 450px;
-    }
-    .push-top {
-      margin-top: 50px;
-    }
-</style>
-
 <div class="card push-top">
   <div class="card-header">
     Add User
@@ -40,11 +31,7 @@
               <label for="email">Email</label>
               <input type="email" class="form-control" name="email"/>
           </div>
-          <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" name="password"/>
-          </div>
-          <button type="submit" class="btn btn-block btn-danger">Create User</button>
+          <button type="submit" class="btn btn-block btn-info">Create User</button>
       </form>
   </div>
 </div>

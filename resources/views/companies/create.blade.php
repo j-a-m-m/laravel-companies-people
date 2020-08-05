@@ -1,16 +1,6 @@
 @extends('layout')
 
 @section('content')
-
-<style>
-    .container {
-      max-width: 450px;
-    }
-    .push-top {
-      margin-top: 50px;
-    }
-</style>
-
 <div class="card push-top">
   <div class="card-header">
     Add Company
@@ -28,11 +18,11 @@
     @endif
       <form method="post" action="{{ route('companies.store') }}">
           <div class="form-group">
-              @csrf
+              @csrf 
               <label for="name">Name</label>
               <input type="text" class="form-control" name="name"/>
           </div>
-          <button type="submit" class="btn btn-block btn-danger">Create Company</button>
+          <button type="submit" class="btn btn-block btn-info">Create Company</button>
       </form>
   </div>
 </div>
