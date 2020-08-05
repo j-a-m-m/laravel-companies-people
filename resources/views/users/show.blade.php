@@ -27,7 +27,7 @@
   </div>
 
   <div class="container">
-    @foreach ($notes as $note)
+    @foreach ($user->notes as $note)
     <div class="row">
       <div class="col-auto mr-auto">
         {{$note->message}}

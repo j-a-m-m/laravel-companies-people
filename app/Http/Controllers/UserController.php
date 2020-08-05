@@ -6,6 +6,8 @@ use App\User;
 use App\UserNote;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -18,6 +20,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::select(['id', 'first_name', 'last_name', 'email'])->withCount('notes')->get();
+        
         return view('users.index', compact('users'));
     }
 
@@ -79,9 +82,8 @@ class UserController extends Controller
     public function show($id)
     {
         //
-        $user = User::where('id', '=', $id)->firstOrFail();
-        $notes = User::find($user->id)->notes;
-        return view('users.show', compact('user'), compact('notes'));
+        $user = User::with('notes')->where('users.id', '=', $id)->get()[0];
+        return view('users.show', compact('user'));
     }
 
     /**

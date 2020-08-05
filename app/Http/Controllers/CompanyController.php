@@ -79,9 +79,8 @@ class CompanyController extends Controller
     public function show($uuid)
     {
         //
-        $company = Company::where('uuid', '=', $uuid)->firstOrFail();
-        $notes = Company::find($company->id)->notes;
-        return view('companies.show', compact('company'), compact('notes'));
+        $company = Company::with('notes')->where('companies.uuid', '=', $uuid)->get()[0];
+        return view('companies.show', compact('company'));
     }
 
     /**
